@@ -4,7 +4,7 @@ import boto3
 from requests_aws4auth import AWS4Auth
 
 def lambda_handler(event, context):
-   lex_client = boto3.client('lex-runtime')
+    lex_client = boto3.client('lex-runtime')
     lex_response = lex_client.post_text(
         botName='photobot',
         botAlias='photobot',
@@ -43,6 +43,7 @@ def lambda_handler(event, context):
     }
     req = requests.get(url, auth=awsauth, headers=headers, data=json.dumps(query))
     r_dict = json.loads(req.text)
+    print(r_dict)
     result_list = r_dict["hits"]["hits"]
     image_url_list = []
 
