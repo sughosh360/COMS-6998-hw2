@@ -24,7 +24,7 @@ apigClientFactory.newClient = function (config) {
             region: '',
             apiKey: undefined,
             defaultContentType: 'application/json',
-            defaultAcceptType: 'application/json'
+            defaultAcceptType: '*'
         };
     }
     if(config.accessKey === undefined) {
@@ -48,12 +48,12 @@ apigClientFactory.newClient = function (config) {
     }
     //If defaultAcceptType is not defined then default to application/json
     if(config.defaultAcceptType === undefined) {
-        config.defaultAcceptType = 'application/json';
+        config.defaultAcceptType = '*';
     }
 
     
     // extract endpoint and path from url
-    var invokeUrl = 'https://9u7r9dpsl0.execute-api.us-east-1.amazonaws.com/prod';
+    var invokeUrl = 'https://9u7r9dpsl0.execute-api.us-east-1.amazonaws.com/test';
     var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
     var pathComponent = invokeUrl.substring(endpoint.length);
 
@@ -122,16 +122,16 @@ apigClientFactory.newClient = function (config) {
     apigClient.uploadPut = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['objectKey', 'Content-Type', 'customlabels', 'realcontenttype'], ['body']);
         
         var uploadPutRequest = {
             verb: 'put'.toUpperCase(),
             path: pathComponent + uritemplate('/upload').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
-            headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Content-Type', 'customlabels', 'realcontenttype']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['objectKey', ]),
             body: body
         };
-        
+        console.log( additionalParams )
         
         return apiGatewayClient.makeRequest(uploadPutRequest, authType, additionalParams, config.apiKey);
     };
