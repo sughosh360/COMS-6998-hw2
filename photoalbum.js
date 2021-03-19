@@ -11,15 +11,23 @@ $(document).ready(function () {
         console.log(filename);
         var additionalparams = {
             headers: {
-                'Content-Type': 'text/html',
-                'realcontenttype': 'jpeg',
-                'customlabels': "panda"
+                'Content-Type': 'image/jpeg',
+                'realcontenttype': 'image/jpeg',
+                'customlabels': customLabels
             },
-            queryParams: {
-                'objectKey': document.getElementById("image-file").value
-            }
+            queryParams: {}
         }
-        var params = {};
+        var params = {
+            'objectKey': document.getElementById("image-file").value,
+            'Content-Type': 'image/jpeg',
+            'realcontenttype': 'image/jpeg',
+            'customlabels': customLabels,
+            headers: {
+                'Content-Type': 'image/jpeg',
+                'realcontenttype': 'image/jpeg',
+                'customlabels': customLabels
+            },
+        };
         console.log(additionalparams);
         return sdk.uploadPut(params, image, additionalparams);
     }
@@ -49,11 +57,20 @@ $(document).ready(function () {
     function upload() {
         var img = document.getElementById("imagebase64").value;
         var comma_index = img.indexOf(",");
+        var custom1 = document.getElementById("customLabel1").value;
+        var custom2 = document.getElementById("customLabel2").value;
+        var custom3 = document.getElementById("customLabel3").value;
+        console.log( "custom1="+custom1 )
+        console.log( "custom2="+custom2 )
+        console.log( "custom3="+custom3 )
+        var customLabels = custom1 + ", " + custom2 + ", " + custom3
+        console.log( "customLabels="+customLabels )
         var image_str = img.substring(comma_index+1);
         console.log(image_str);
-        callUploadAPI(image_str, "").then((response) => {
+        callUploadAPI(image_str, customLabels).then((response) => {
             console.log(response);
         });
+        $('.upload-message').html("File Uploaded");
     }
 
     $('.search-button').click(function () {

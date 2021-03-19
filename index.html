@@ -12,7 +12,7 @@
   </head>
   <body style="background-color:grey;">
     <blockquote class="blockquote text-center">
-        <h1> FotoAlbum </h1>
+        <h1> Searchable Photo Album </h1>
     </blockquote>
 
     <div class="container">
@@ -22,15 +22,38 @@
                     <div class="card-header text-center" >
                     Upload Image
                     </div>
+
                     <div class="card-body">
                     <h5 class="card-title">Upload Image</h5>
                     <p class="card-text" style="font-family:verdana">Upload image to your photo album</p>
                     <input type="file" id="image" name="imagefile" class="image">
+
+                    <br></br>
+                    <p class="card-text" style="font-family:verdana">Would you like to add custom labels to this image?</p>
+                    <p class="card-text" style="font-family:verdana">Custom label #1:</p>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control custom1" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="customLabel1">
+                    </div>
+                    <p class="card-text" style="font-family:verdana">Custom label #2:</p>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control custom2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="customLabel2">
+                    </div>
+                    <p class="card-text" style="font-family:verdana">Custom label #3:</p>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control custom3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="customLabel3">
+                    
+                    </div>
                     <a href="#" class="btn btn-primary upload-button">Upload</a>
+                    </div>
+
+                    <br></br>
                     <img id="img" height="150">
                     <input type="hidden" id="imagebase64" name="imagebase64" value="">
                     <input type="hidden" id="image-file" name="image-file" value="">
-                    </div>
+                    <br></br>
+
+                    <div class="upload-message"></div>
+
                 </div>
             </div>
             <div class="col-6">
