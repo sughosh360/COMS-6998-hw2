@@ -12,7 +12,7 @@ Resources:
       Description: "Lambda function for CD Demo"
       MemorySize: 128
       Timeout: 30
-      Role: 'arn:aws:iam::134260679325:role/service-role/codebuild-lambdaBuildProject-HW2-service-role'
+      Role: 'arn:aws:iam::134260679325:role/CloudFormationRole'
       Environment:
         Variables:
           REGION: us-east-1
@@ -26,7 +26,7 @@ Resources:
       Description: "Lambda function for CD Demo"
       MemorySize: 128
       Timeout: 30
-      Role: 'arn:aws:iam::134260679325:role/service-role/codebuild-lambdaBuildProject-HW2-service-role'
+      Role: 'arn:aws:iam::134260679325:role/CloudFormationRole'
       Environment:
         Variables:
           REGION: us-east-1
