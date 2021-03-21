@@ -42,7 +42,7 @@ $(document).ready(function () {
             
             var html = '<br>';
             if (image_list.length == 0) {
-                html += '<h3>No images found for given tags</h3>'
+                alert("Image not available! Please search for a valid image.");
             } else {
                 var i;
                 for (i = 0; i < image_list.length; i++) {
