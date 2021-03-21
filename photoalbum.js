@@ -1,48 +1,23 @@
 $(document).ready(function () {
     console.log("Ready!");
 
- 
+
     function callSearchAPI(query) {
         return sdk.searchGet({ q: query }, {}, {});
     }
 
-
-    function httpReq(method, url, data, successCB, errorCB) {
-        var xhr = new XMLHttpRequest();
-       
-        xhr.addEventListener('load', function () {
-            if (xhr.status == 200) {
-                successCB(xhr.response);
-               
-                document.getElementById("uploadText").innerHTML = "Image Uploaded!!!"
-                document.getElementById("uploadText").style.display = "block";
-           
-            } else {
-                errorCB({status: xhr.status, response: xhr.response});
-                document.getElementById("uploadText").innerHTML = "Fail to Upload!"
-                document.getElementById("uploadText").style.display = "block";
-            }
-        });
-
-        xhr.open(method, url, true);
-        // give access to bucket owner full control
-        xhr.setRequestHeader("x-amz-acl", "public-read");
-        xhr.send(data);
-    }
-
-
     function callUploadAPI(image, customLabels) {
-        var file = document.getElementById("image-file");
-        var fileName = file.name;
-        console.log(file.name);
-        //http://photo-bucket-6998-hw3-cloud-hw3-test-dev.s3.amazonaws.com/yourKey arn:aws:s3:us-east-1:134260679325:accesspoint/coms-hw2
-        httpReq('PUT', 'https://awsphoto-bucket.s3.amazonaws.com/' + fileName.toString(), file, function (response) {
-            console.log('Upload Successful', response);
-        }, function (error) {
-            console.error(error);
-        });
-
-        /*var params = {
+        var filename = document.getElementById("image-file").value;
+        console.log(filename);
+        var additionalparams = {
+            headers: {
+                'Content-Type': 'image/jpeg',
+                'realcontenttype': 'image/jpeg',
+                'customlabels': customLabels
+            },
+            queryParams: {}
+        }
+        var params = {
             'objectKey': document.getElementById("image-file").value,
             'Content-Type': 'image/jpeg',
             'realcontenttype': 'image/jpeg',
@@ -54,7 +29,7 @@ $(document).ready(function () {
             },
         };
         console.log(additionalparams);
-        return sdk.uploadPut(params, image, additionalparams);*/
+        return sdk.uploadPut(params, image, additionalparams);
     }
 
     function search() {
@@ -64,7 +39,7 @@ $(document).ready(function () {
         callSearchAPI(search_query).then((response) => {
             var image_list = response.data.results;
             console.log(image_list);
-           
+            
             var html = '<br>';
             if (image_list.length == 0) {
                 html += '<h3>No images found for given tags</h3>'
@@ -92,7 +67,9 @@ $(document).ready(function () {
         console.log( "customLabels="+customLabels )
         var image_str = img.substring(comma_index+1);
         console.log(image_str);
-        callUploadAPI(image_str, customLabels);
+        callUploadAPI(image_str, customLabels).then((response) => {
+            console.log(response);
+        });
         $('.upload-message').html("File Uploaded");
     }
 
@@ -112,7 +89,7 @@ $(document).ready(function () {
     })
 
     function readFile() {
- 
+  
         if (this.files && this.files[0]) {
 
             var FR = new FileReader();
@@ -122,11 +99,11 @@ $(document).ready(function () {
             FR.addEventListener("load", function(e) {
                 document.getElementById("img").src = e.target.result;
                 document.getElementById("imagebase64").setAttribute("value", e.target.result);
-            });
+            }); 
 
             FR.readAsDataURL( this.files[0] );
         }
-       
+        
     }
 
     document.getElementById("image").addEventListener("change", readFile);
@@ -135,10 +112,10 @@ $(document).ready(function () {
         // check for support (webkit only)
         if (!('webkitSpeechRecognition' in window)) // todo error
             return;
-   
+    
         var input = document.getElementById('input');
         var record = document.getElementById('record');
-   
+    
         // setup recognition
         const talkMsg = 'Speak now';
         // seconds to wait for more input after last
@@ -149,20 +126,20 @@ $(document).ready(function () {
         var recognition = new webkitSpeechRecognition();
         recognition.continuous = true;
         recognition.interimResults = true;
-   
+    
         function restartTimer() {
             timeout = setTimeout(function () {
                 recognition.stop();
             }, patience * 1000);
         }
-   
+    
         recognition.onstart = function () {
             oldPlaceholder = input.placeholder;
             input.placeholder = talkMsg;
             recognizing = true;
             restartTimer();
         };
-   
+    
         recognition.onend = function () {
             recognizing = false;
             console.log("onend");
@@ -171,10 +148,10 @@ $(document).ready(function () {
                 input.placeholder = oldPlaceholder;
             search();
         };
-   
+    
         recognition.onresult = function (event) {
             clearTimeout(timeout);
-   
+    
             // get SpeechRecognitionResultList object
             var resultList = event.results;
             console.log("onresult");
@@ -193,16 +170,16 @@ $(document).ready(function () {
             }
             // capitalize transcript if start of new sentence
             var transcript = finalTranscript || interimTranscript;
-   
+    
             // append transcript to cached input value
             input.value = transcript;
-   
+    
             restartTimer();
         };
-   
+    
         record.addEventListener('click', function (event) {
             event.preventDefault();
-   
+    
             // stop and exit if already going
             if (recognizing) {
                 recognition.stop();
