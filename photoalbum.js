@@ -3,7 +3,13 @@ $(document).ready(function () {
 
 
     function callSearchAPI(query) {
-        return sdk.searchGet({ q: query }, {}, {});
+        var params = {
+            headers: {
+                'x-api-key': '6hZrAsyYeI3hy5JyRYgnC7d9Tqc0O4G17uSOLqIo'
+            },
+            q: query,
+        };
+        return sdk.searchGet(params, {}, {});
     }
 
     function callUploadAPI(image, customLabels) {
@@ -23,6 +29,7 @@ $(document).ready(function () {
             'realcontenttype': 'image/jpeg',
             'customlabels': customLabels,
             headers: {
+                'x-api-key': '6hZrAsyYeI3hy5JyRYgnC7d9Tqc0O4G17uSOLqIo',
                 'Content-Type': 'image/jpeg',
                 'realcontenttype': 'image/jpeg',
                 'customlabels': customLabels
