@@ -47,17 +47,19 @@ def get_obj_metadata( bucket, key ):
     print( 'ObjHead: {0}'.format(obj_head) )
     meta_data = obj_head['ResponseMetadata']
     if 'x-amz-meta-customlabels' in meta_data['HTTPHeaders'].keys():
-        customLabels = meta_data['HTTPHeaders']['x-amz-meta-customlabels'].split(", ")
+        customLabels = meta_data['HTTPHeaders']['x-amz-meta-customlabels'].split(",")
+        customLabels = [x for x in customLabels if len(x)]
     else:
         customLabels = []
     print( 'MetaData: {0}'.format(meta_data) )
     create_dt = obj_head['LastModified']
+    print( 'Custom labels are: {0}'.format(customLabels) )
     print( 'ABOUT TO CALL DETECT LABELS WITH: {0}, {1}'.format(key, bucket) )
     labels = detect_labels( key, bucket)
     label_count = len(labels)
     all_labels = labels + [x for x in customLabels if x not in labels]
     print( 'Labels detected: {0}'.format(label_count) )
-    print( 'Labels are: {0}'.format( ', '.join(labels) ) )
+    print( 'Labels are: {0}'.format( ', '.join(all_labels) ) )
     obj_data = {
         "objectKey": key,
         "bucket": bucket,

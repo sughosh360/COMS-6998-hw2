@@ -63,7 +63,7 @@ $(document).ready(function () {
         console.log( "custom1="+custom1 )
         console.log( "custom2="+custom2 )
         console.log( "custom3="+custom3 )
-        var customLabels = custom1 + ", " + custom2 + ", " + custom3
+        var customLabels = custom1 + "," + custom2 + "," + custom3
         console.log( "customLabels="+customLabels )
         var image_str = img.substring(comma_index+1);
         console.log(image_str);
