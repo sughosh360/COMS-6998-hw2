@@ -3,13 +3,9 @@ $(document).ready(function () {
 
 
     function callSearchAPI(query) {
-        var params = {
-            headers: {
-                'x-api-key': '6hZrAsyYeI3hy5JyRYgnC7d9Tqc0O4G17uSOLqIo'
-            },
-            q: query,
-        };
-        return sdk.searchGet(params, {}, {});
+        return sdk.searchGet({ q: query,headers: {
+                'X-Api-Key': 'UhBgfLW2Wea07vJNLg0AE5OAT5MoTrNvai99r3Ec'
+            },}, {}, {});
     }
 
     function callUploadAPI(image, customLabels) {
@@ -29,7 +25,7 @@ $(document).ready(function () {
             'realcontenttype': 'image/jpeg',
             'customlabels': customLabels,
             headers: {
-                'x-api-key': '6hZrAsyYeI3hy5JyRYgnC7d9Tqc0O4G17uSOLqIo',
+                'X-Api-Key': 'UhBgfLW2Wea07vJNLg0AE5OAT5MoTrNvai99r3Ec',
                 'Content-Type': 'image/jpeg',
                 'realcontenttype': 'image/jpeg',
                 'customlabels': customLabels
