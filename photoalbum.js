@@ -3,9 +3,7 @@ $(document).ready(function () {
 
 
     function callSearchAPI(query) {
-        return sdk.searchGet({ q: query,headers: {
-                'X-Api-Key': 'UhBgfLW2Wea07vJNLg0AE5OAT5MoTrNvai99r3Ec'
-            },}, {}, {});
+        return sdk.searchGet({ q: query}, {}, {});
     }
 
     function callUploadAPI(image, customLabels) {
@@ -25,7 +23,6 @@ $(document).ready(function () {
             'realcontenttype': 'image/jpeg',
             'customlabels': customLabels,
             headers: {
-                'X-Api-Key': 'UhBgfLW2Wea07vJNLg0AE5OAT5MoTrNvai99r3Ec',
                 'Content-Type': 'image/jpeg',
                 'realcontenttype': 'image/jpeg',
                 'customlabels': customLabels
