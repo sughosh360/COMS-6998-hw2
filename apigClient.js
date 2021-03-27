@@ -53,7 +53,7 @@ apigClientFactory.newClient = function (config) {
 
     
     // extract endpoint and path from url
-    var invokeUrl = 'https://9u7r9dpsl0.execute-api.us-east-1.amazonaws.com/test6';
+    var invokeUrl = 'https://77qmdoxvh2.execute-api.us-east-1.amazonaws.com/prod';
     var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
     var pathComponent = invokeUrl.substring(endpoint.length);
 
@@ -104,12 +104,12 @@ apigClientFactory.newClient = function (config) {
     apigClient.searchOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['x-api-key'], ['body']);
         
         var searchOptionsRequest = {
             verb: 'options'.toUpperCase(),
             path: pathComponent + uritemplate('/search').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
-            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['x-api-key']),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
@@ -122,13 +122,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.uploadPut = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['objectKey', 'customlabels', 'Content-Type', 'realcontenttype'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['Content-Type', 'objectKey', 'realcontenttype', 'customlabels'], ['body']);
         
         var uploadPutRequest = {
             verb: 'put'.toUpperCase(),
             path: pathComponent + uritemplate('/upload').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
-            headers: apiGateway.core.utils.parseParametersToObject(params, ['Content-Type', 'realcontenttype']),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['objectKey', 'customlabels', ]),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Content-Type', 'realcontenttype', ]),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['objectKey', 'customlabels']),
             body: body
         };
         

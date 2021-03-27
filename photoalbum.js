@@ -3,7 +3,7 @@ $(document).ready(function () {
 
 
     function callSearchAPI(query) {
-        return sdk.searchGet({ q: query }, {}, {});
+        return sdk.searchGet({ q: query}, {}, {});
     }
 
     function callUploadAPI(image, customLabels) {
